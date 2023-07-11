@@ -3,6 +3,9 @@
 - 面向对象的三大特性：
   封装，继承，多态
 - 封装
+  - public
+  - protected
+  - private
 - 继承
 - 多态
 
