@@ -32,8 +32,30 @@ public:
 
 class Person {
 public:
+	// (无参)构造函数 自动调用并且只会调用一次
+	Person() { cout << "Person 构造函数的调用" << endl; }
+    // 有参构造函数
+    Person(int a){
+        m_Age = a;
+    }
+    // 拷贝构造函数
+    Person(const Person &p){     // 必须使用const修饰的引用传递
+        m_Age = p.m_Age;
+    }
 	void   SetName(int name) { m_Name = name; }
 	string GetName() { return m_Name; }
+	void   SetAge(int age) {
+		  if (age < 0 || age > 150) {
+			  m_Age = 0;
+			  cout << "can not set age" << endl;
+			  return;
+		  }
+		  m_Age = age;
+	}
+
+	// 析构函数 对象销毁前自动调用并且只会调用一次
+	~Person() { cout << "Person 析构函数的调用" << endl; }
+    // 构造和析构不写的话由编译器自动生成
 
 private:
 	string m_Name;
