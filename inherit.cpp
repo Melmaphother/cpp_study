@@ -3,65 +3,65 @@
 using namespace std;
 /*
 
-  ç»§æ‰¿çš„è¯­æ³•
+  ¼Ì³ĞµÄÓï·¨
 */
-// æ™®é€šå®ç°é¡µé¢
+// ÆÕÍ¨ÊµÏÖÒ³Ãæ
 // class Java {
 // public:
-// 	void header() { cout << "å…¬å…±å¤´éƒ¨" << endl; }
-// 	void left() { cout << "å…¬å…±å·¦ä¾§" << endl; }
-// 	void content() { cout << "Javaå†…å®¹" << endl; }
+// 	void header() { cout << "¹«¹²Í·²¿" << endl; }
+// 	void left() { cout << "¹«¹²×ó²à" << endl; }
+// 	void content() { cout << "JavaÄÚÈİ" << endl; }
 // };
 // class Python {
 // public:
-// 	void header() { cout << "å…¬å…±å¤´éƒ¨" << endl; }
-// 	void left() { cout << "å…¬å…±å·¦ä¾§" << endl; }
-// 	void content() { cout << "Pythonå†…å®¹" << endl; }
+// 	void header() { cout << "¹«¹²Í·²¿" << endl; }
+// 	void left() { cout << "¹«¹²×ó²à" << endl; }
+// 	void content() { cout << "PythonÄÚÈİ" << endl; }
 // };
 // class CPP {
 // public:
-// 	void header() { cout << "å…¬å…±å¤´éƒ¨" << endl; }
-// 	void left() { cout << "å…¬å…±å·¦ä¾§" << endl; }
-// 	void content() { cout << "CPPå†…å®¹" << endl; }
+// 	void header() { cout << "¹«¹²Í·²¿" << endl; }
+// 	void left() { cout << "¹«¹²×ó²à" << endl; }
+// 	void content() { cout << "CPPÄÚÈİ" << endl; }
 // };
 
-// ç»§æ‰¿å®ç°é¡µé¢
+// ¼Ì³ĞÊµÏÖÒ³Ãæ
 /*
-  å…¬å…±ç»§æ‰¿æ–¹å¼
-  class å­ç±» ï¼šç»§æ‰¿æ–¹å¼ çˆ¶ç±»
-  å­ç±» ä¹Ÿç§°ä¸ºæ´¾ç”Ÿç±»ï¼ˆå¸¸ç”¨ï¼‰
-  çˆ¶ç±» ä¹Ÿç§°ä¸ºåŸºç±»ï¼ˆä¸å¸¸ç”¨ï¼‰
+  ¹«¹²¼Ì³Ğ·½Ê½
+  class ×ÓÀà £º¼Ì³Ğ·½Ê½ ¸¸Àà
+  ×ÓÀà Ò²³ÆÎªÅÉÉúÀà£¨³£ÓÃ£©
+  ¸¸Àà Ò²³ÆÎª»ùÀà£¨²»³£ÓÃ£©
 */
 class BasePage {
 public:
-	void header() { cout << "å…¬å…±å¤´éƒ¨" << endl; }
-	void left() { cout << "å…¬å…±å·¦ä¾§" << endl; }
-    // ! ä¿ç•™å…¬å…±éƒ¨åˆ†å³å¯
-	//void content() { cout << "Javaã€Pythonã€CPPå†…å®¹" << endl; }
+	void header() { cout << "¹«¹²Í·²¿" << endl; }
+	void left() { cout << "¹«¹²×ó²à" << endl; }
+	// ! ±£Áô¹«¹²²¿·Ö¼´¿É
+	// void content() { cout << "Java¡¢Python¡¢CPPÄÚÈİ" << endl; }
 };
-// Javaé¡µé¢
+// JavaÒ³Ãæ
 class Java : public BasePage {
 public:
-	void content() { cout << "Javaå†…å®¹" << endl; }
+	void content() { cout << "JavaÄÚÈİ" << endl; }
 };
-// Pythoné¡µé¢
+// PythonÒ³Ãæ
 class Python : public BasePage {
-	void content() { cout << "Pythonå†…å®¹" << endl; }
+	void content() { cout << "PythonÄÚÈİ" << endl; }
 };
-// CPPé¡µé¢
+// CPPÒ³Ãæ
 class CPP : public BasePage {
-	void content() { cout << "CPPå†…å®¹" << endl; }
+	void content() { cout << "CPPÄÚÈİ" << endl; }
 };
 
-// è°ƒç”¨
-void test(){
-    Java ja;
-    ja.header();
-    ja.left();
-    ja.content();
+// µ÷ÓÃ
+void test() {
+	Java ja;
+	ja.header();
+	ja.left();
+	ja.content();
 }
 
-int main(){
-    test();
-    system("pause");
+int main() {
+	test();
+	system("pause");
 }
