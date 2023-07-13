@@ -36,7 +36,8 @@ class BasePage {
 public:
 	void header() { cout << "公共头部" << endl; }
 	void left() { cout << "公共左侧" << endl; }
-	void content() { cout << "Java、Python、CPP内容" << endl; }
+    // ! 保留公共部分即可
+	//void content() { cout << "Java、Python、CPP内容" << endl; }
 };
 // Java页面
 class Java : public BasePage {
@@ -52,7 +53,15 @@ class CPP : public BasePage {
 	void content() { cout << "CPP内容" << endl; }
 };
 
+// 调用
+void test(){
+    Java ja;
+    ja.header();
+    ja.left();
+    ja.content();
+}
 
 int main(){
+    test();
     system("pause");
 }
