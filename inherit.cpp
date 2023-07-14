@@ -66,12 +66,39 @@ protected:
 private:
 	int m_C;
 };
-
-class Son1 : public Base {};
-class Son2 : protected Base {};
-class Son3 : private Base {};
+// 公共继承
+class Son1 : public Base {
+public:
+	void func() {
+		m_A = 10; // * 父类中的公共权限在子类中还是公共权限
+		m_B = 10; // * 父类中的保护权限在子类中还是保护权限
+		// m_C = 10;   // * 父类中的私有权限在子类中无法访问
+	}
+};
+class Son2 : protected Base {
+public:
+	void func() {
+		m_A = 10; // * 父类中的公共权限在子类中变为protected
+		m_B = 10; // * 父类中的保护权限在子类中还是保护权限
+		// m_C = 10;   // * 父类中的私有权限在子类中无法访问
+	}
+};
+class Son3 : private Base {
+public:
+	void func() {
+		m_A = 10; // * 父类中的公共权限在子类中变为private
+		m_B = 10; // * 父类中的保护权限在子类中变为private
+		// m_C = 10; // * 父类中的私有权限在子类中无法访问
+	}
+};
+class GrandSon3 : public Son3 {
+public:
+	void func() {
+		// * m_A = 10;  无法访问
+	}
+};
 // 调用
-void test() {
+void test01() {
 	Java ja;
 	ja.header();
 	ja.left();
@@ -79,6 +106,6 @@ void test() {
 }
 
 int main() {
-	test();
+	test01();
 	system("pause");
 }
