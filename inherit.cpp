@@ -153,11 +153,10 @@ class Animal {
 // class Sheep : public Animal {};
 // class Tuo : public Animal {};
 class Sheep : virtual public Animal {};
-class Tuo : virtual public Animal {};   // 只继承了虚指针（vbptr），指向一个（vbtable），通过偏移找到共同的数据
-class SheepTuo : public Sheep, public Tuo {};   // 避免了数据的重复
+class Tuo : virtual public Animal {
+}; // 只继承了虚指针（vbptr），指向一个（vbtable），通过偏移找到共同的数据
+class SheepTuo : public Sheep, public Tuo {}; // 避免了数据的重复
 int main() {
 	test01();
 	system("pause");
 }
-
-
