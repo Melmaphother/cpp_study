@@ -55,8 +55,14 @@ class CPP : public BasePage {
 
 /*
  * 继承方式：公共继承，私有继承和保护继承
+ *
+ * 虽然父类中private成员中子类无法访问，但其实是被编译器隐藏了，所以无法访问
+ * 但是确实在子类中是拥有的，是继承下来的
+ *
+ * 构造和析构顺序
+ * 父构 > 子类 > 子析 > 父析
  */
-class Base {
+class Base1 {
 public:
 	int m_A;
 
@@ -67,7 +73,7 @@ private:
 	int m_C;
 };
 // 公共继承
-class Son1 : public Base {
+class Son1 : public Base1 {
 public:
 	void func() {
 		m_A = 10; // * 父类中的公共权限在子类中还是公共权限
@@ -75,7 +81,7 @@ public:
 		// m_C = 10;   // * 父类中的私有权限在子类中无法访问
 	}
 };
-class Son2 : protected Base {
+class Son2 : protected Base1 {
 public:
 	void func() {
 		m_A = 10; // * 父类中的公共权限在子类中变为protected
@@ -83,7 +89,7 @@ public:
 		// m_C = 10;   // * 父类中的私有权限在子类中无法访问
 	}
 };
-class Son3 : private Base {
+class Son3 : private Base1 {
 public:
 	void func() {
 		m_A = 10; // * 父类中的公共权限在子类中变为private
@@ -97,6 +103,38 @@ public:
 		// * m_A = 10;  无法访问
 	}
 };
+
+/*
+ * 继承中同名成员的处理方式
+ */
+class Base2 {
+public:
+	Base2() { m_A = 100; }
+	void func() { cout << "Base2函数调用" << endl; }
+	void func(int a) { cout << "Base2重载函数调用" << endl; }
+	int	 m_A;
+};
+class Son4 : public Base2 {
+public:
+	Son4() { m_A = 200; }
+	void func() { cout << "Son4函数调用" << endl; }
+	int	 m_A;
+};
+void test02() {
+	Son4 s4;
+	cout << "Son4 m_A = " << s4.m_A << endl; // * 输出的200
+	cout << "Base4 m_A = " << s4.Base2::m_A
+		 << endl; // * 输出的100，要加Base作用域
+	s4.func();
+	// 不能直接访问父类中被隐藏的同名函数，必须加作用域，无论同名函数是否重载
+	s4.Base2::func();
+	//! s4.func(100); 也是错的必须写为s4.Base2::func(100);
+}
+
+/*
+ * 多继承语法，实际不常用，重名访问父类要加作用域
+ */
+class Son5 : public Base1, public Base2 {};
 // 调用
 void test01() {
 	Java ja;
