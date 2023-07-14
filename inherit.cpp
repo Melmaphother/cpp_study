@@ -53,6 +53,13 @@ class CPP : public BasePage {
 	void content() { cout << "CPP内容" << endl; }
 };
 
+void test01() {
+	Java ja;
+	ja.header();
+	ja.left();
+	ja.content();
+}
+
 /*
  * 继承方式：公共继承，私有继承和保护继承
  *
@@ -135,14 +142,19 @@ void test02() {
  * 多继承语法，实际不常用，重名访问父类要加作用域
  */
 class Son5 : public Base1, public Base2 {};
-// 调用
-void test01() {
-	Java ja;
-	ja.header();
-	ja.left();
-	ja.content();
-}
 
+/*
+ * 菱形继承，实际也不常用，
+ ! 不过需要了解virtual修饰的知识
+ */
+class Animal {
+	int m_Age;
+};
+// class Sheep : public Animal {};
+// class Tuo : public Animal {};
+class Sheep : virtual public Animal {};
+class Tuo : virtual public Animal {};   // 只继承了虚指针（vbptr），指向一个（vbtable），通过偏移找到共同的数据
+class SheepTuo : public Sheep, public Tuo {};   // 避免了数据的重复
 int main() {
 	test01();
 	system("pause");
