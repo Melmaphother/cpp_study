@@ -27,11 +27,11 @@ using namespace std;
 
 // 继承实现页面
 /*
-  公共继承方式
-  class 子类 ：继承方式 父类
-  子类 也称为派生类（常用）
-  父类 也称为基类（不常用）
-*/
+ * 公共继承方式
+ * class 子类 ：继承方式 父类
+ * 子类 也称为派生类（常用）
+ * 父类 也称为基类（不常用）
+ */
 class BasePage {
 public:
 	void header() { cout << "公共头部" << endl; }
@@ -53,6 +53,23 @@ class CPP : public BasePage {
 	void content() { cout << "CPP内容" << endl; }
 };
 
+/*
+ * 继承方式：公共继承，私有继承和保护继承
+ */
+class Base {
+public:
+	int m_A;
+
+protected:
+	int m_B;
+
+private:
+	int m_C;
+};
+
+class Son1 : public Base {};
+class Son2 : protected Base {};
+class Son3 : private Base {};
 // 调用
 void test() {
 	Java ja;
