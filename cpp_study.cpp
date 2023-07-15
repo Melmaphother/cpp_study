@@ -4,10 +4,14 @@
 using namespace std;
 /* 函数模板
 template<typename T>
-void myPrint(T a, T b){
+T myPrint(T a, T b){
+	T c;
+	c = a + b;
+	return c;
 	std::cout << "transfer function template" << std::endl;
 }
 myPrint<int>(a, b);
+myPrint<double>(a, b);
 */
 
 #define PI 3.14
@@ -16,7 +20,7 @@ myPrint<int>(a, b);
  * public     类内可以访问，类外可以访问
  * private    类内可以访问，类外不可以访问，子类不可以访问父类中的私有内容
  * protected  类内可以访问，类外不可以访问，子类可以访问父类中的保护内容
-*/
+ */
 class Circle {
 	// 访问权限
 	// 公共权限
@@ -34,14 +38,12 @@ class Person {
 public:
 	// (无参)构造函数 自动调用并且只会调用一次
 	Person() { cout << "Person 构造函数的调用" << endl; }
-    // 有参构造函数
-    Person(int a){
-        m_Age = a;
-    }
-    // 拷贝构造函数
-    Person(const Person &p){     // 必须使用const修饰的引用传递
-        m_Age = p.m_Age;
-    }
+	// 有参构造函数
+	Person(int a) { m_Age = a; }
+	// 拷贝构造函数
+	Person(const Person &p) { // 必须使用const修饰的引用传递
+		m_Age = p.m_Age;
+	}
 	void   SetName(int name) { m_Name = name; }
 	string GetName() { return m_Name; }
 	void   SetAge(int age) {
@@ -55,7 +57,7 @@ public:
 
 	// 析构函数 对象销毁前自动调用并且只会调用一次
 	~Person() { cout << "Person 析构函数的调用" << endl; }
-    // 构造和析构不写的话由编译器自动生成
+	// 构造和析构不写的话由编译器自动生成
 
 private:
 	string m_Name;
