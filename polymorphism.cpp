@@ -4,9 +4,9 @@
  * @brief about polymorphism in c++
  * @version 0.1
  * @date 2023-07-15
- * 
+ *
  * @copyright Copyright (c) Melmaphother
- * 
+ *
  */
 
 #include <iostream>
@@ -14,34 +14,46 @@
 using namespace std;
 
 /*
- * å¤šæ€åˆ†ä¸ºä¸¤ç±»
- * é™æ€å¤šæ€ï¼šå‡½æ•°é‡è½½å’Œè¿ç®—ç¬¦é‡è½½å±žäºŽé™æ€å¤šæ€ï¼Œå¤ç”¨å‡½æ•°å----- å‡½æ•°åœ°å€æ—©ç»‘å®šï¼Œç¼–è¯‘é˜¶æ®µç¡®å®šå‡½æ•°åœ°å€
- ! åŠ¨æ€å¤šæ€ï¼šæ´¾ç”Ÿç±»å’Œè™šå‡½æ•°è¿è¡Œæ—¶å¤šæ€------ å‡½æ•°åœ°å€æ™šç»‘å®šï¼Œè¿è¡Œé˜¶æ®µç¡®å®šå‡½æ•°åœ°å€
+ * ¶àÌ¬·ÖÎªÁ½Àà
+ * ¾²Ì¬¶àÌ¬£ºº¯ÊýÖØÔØºÍÔËËã·ûÖØÔØÊôÓÚ¾²Ì¬¶àÌ¬£¬¸´ÓÃº¯ÊýÃû-----º¯ÊýµØÖ·Ôç°ó¶¨£¬±àÒë½×¶ÎÈ·¶¨º¯ÊýµØÖ·
+ ! ¶¯Ì¬¶àÌ¬£ºÅÉÉúÀàºÍÐéº¯ÊýÔËÐÐÊ±¶àÌ¬------º¯ÊýµØÖ·Íí°ó¶¨£¬ÔËÐÐ½×¶ÎÈ·¶¨º¯ÊýµØÖ·
+ */
+/*
+ * ¶¯Ì¬¶àÌ¬µÄÂú×ãÌõ¼þ
+ * - ÓÐ¼Ì³Ð¹ØÏµ
+ * - ×ÓÀàÖØÐ´¸¸ÀàµÄÐéº¯Êý
+ * ¶¯Ì¬¶àÌ¬µÄÊ¹ÓÃ
+ ! ¸¸ÀàµÄÖ¸Õë»òÒýÓÃÖ´ÐÐ×ÓÀà¶ÔÏó
 */
-class Animal{
-    public:
-    void speak(){
-        cout <<"åŠ¨ç‰©ä¼šè¯´è¯"<<endl;
-    }
+class Animal {
+public:
+	//* void speak() { cout << "¶¯Îï»áËµ»°" << endl; }
+	virtual void speak() { cout << "¶¯Îï»áËµ»°" << endl; }
 };
 
-class Cat : public Animal{
-    public:
-    void speak() {
-        cout << "å°çŒ«åœ¨è¯´è¯" << endl;
-     }
-
+class Cat : public Animal {
+public:
+	// ! ÖØÐ´ º¯Êý·µ»ØÖµµÄÀàÐÍ º¯ÊýÃû³Æ ²ÎÊýÁÐ±í ÍêÈ«ÏàÍ¬
+	// * ×ÓÀàÖÐvirtual¹Ø¼ü×Ö¿ÉÐ´¿É²»Ð´
+	void speak() { cout << "Ð¡Ã¨ÔÚËµ»°" << endl; }
 };
-void doSpeak(Animal& animal){
-    animal.speak();
-}
-void test01(){
-    Cat cat;
-    doSpeak(cat);
+
+// * µØÖ·Ôç°ó¶¨£¬ÔÚ±àÒë½×¶Î¾ÍÈ·¶¨ÁËº¯ÊýµØÖ·
+// * Èç¹ûÏëÈÃÃ¨Ëµ»°£¬ÐèÒª½«µØÖ·Íí°ó¶¨£¬¼´ÔÚÔËÐÐ½×¶Î°ó¶¨
+// !ÐèÒª½«¸¸ÀàÖÐµÄº¯Êý¼ÓÉÏvirtual¹Ø¼ü×Ö
+// !¾ÍÏàµ±ÓÚÖØÔØº¯Êý£¬±¾À´ÐèÒªÔÚÍ¬Ò»×÷ÓÃÓòÏÂ²ÅÄÜÖØÔØ£¬ÏÖvirtualÔÊÐí¸¸×ÓÀà¼äº¯ÊýÖØÔØ
+void doSpeak(Animal &animal) // Animal& animal = cat
+{
+	animal.speak();
 }
 
+void test01() {
+	Cat cat;
+	// ´ËÊ±µ÷ÓÃµÄÊÇ¸¸ÀàµÄspeakº¯Êý
+	doSpeak(cat);
+}
 
-int main(){
-    test01();
-    system("pause");
+int main() {
+	test01();
+	system("pause");
 }
