@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-/* å‡½æ•°æ¨¡æ¿
+/* º¯ÊýÄ£°å
 template<typename T>
 T myPrint(T a, T b){
 	T c;
@@ -17,31 +17,31 @@ myPrint<double>(a, b);
 #define PI 3.14
 
 /*
- * public     ç±»å†…å¯ä»¥è®¿é—®ï¼Œç±»å¤–å¯ä»¥è®¿é—®
- * private    ç±»å†…å¯ä»¥è®¿é—®ï¼Œç±»å¤–ä¸å¯ä»¥è®¿é—®ï¼Œå­ç±»ä¸å¯ä»¥è®¿é—®çˆ¶ç±»ä¸­çš„ç§æœ‰å†…å®¹
- * protected  ç±»å†…å¯ä»¥è®¿é—®ï¼Œç±»å¤–ä¸å¯ä»¥è®¿é—®ï¼Œå­ç±»å¯ä»¥è®¿é—®çˆ¶ç±»ä¸­çš„ä¿æŠ¤å†…å®¹
+ * public     ÀàÄÚ¿ÉÒÔ·ÃÎÊ£¬ÀàÍâ¿ÉÒÔ·ÃÎÊ
+ * private    ÀàÄÚ¿ÉÒÔ·ÃÎÊ£¬ÀàÍâ²»¿ÉÒÔ·ÃÎÊ£¬×ÓÀà²»¿ÉÒÔ·ÃÎÊ¸¸ÀàÖÐµÄË½ÓÐÄÚÈÝ
+ * protected  ÀàÄÚ¿ÉÒÔ·ÃÎÊ£¬ÀàÍâ²»¿ÉÒÔ·ÃÎÊ£¬×ÓÀà¿ÉÒÔ·ÃÎÊ¸¸ÀàÖÐµÄ±£»¤ÄÚÈÝ
  */
 class Circle {
-	// è®¿é—®æƒé™
-	// å…¬å…±æƒé™
+	// ·ÃÎÊÈ¨ÏÞ
+	// ¹«¹²È¨ÏÞ
 public:
-	// ç±»ä¸­çš„å±žæ€§å’Œè¡Œä¸ºç»Ÿç§°ä¸ºæˆå‘˜
-	// å±žæ€§
-	// åŠå¾„
+	// ÀàÖÐµÄÊôÐÔºÍÐÐÎªÍ³³ÆÎª³ÉÔ±
+	// ÊôÐÔ
+	// °ë¾¶
 	int r;
-	// è¡Œä¸º
-	// æ±‚å‘¨é•¿
+	// ÐÐÎª
+	// ÇóÖÜ³¤
 	double calculateZC() { return 2 * PI * r; }
 };
 
 class Person {
 public:
-	// (æ— å‚)æž„é€ å‡½æ•° è‡ªåŠ¨è°ƒç”¨å¹¶ä¸”åªä¼šè°ƒç”¨ä¸€æ¬¡
-	Person() { cout << "Person æž„é€ å‡½æ•°çš„è°ƒç”¨" << endl; }
-	// æœ‰å‚æž„é€ å‡½æ•°
+	// (ÎÞ²Î)¹¹Ôìº¯Êý ×Ô¶¯µ÷ÓÃ²¢ÇÒÖ»»áµ÷ÓÃÒ»´Î
+	Person() { cout << "Person ¹¹Ôìº¯ÊýµÄµ÷ÓÃ" << endl; }
+	// ÓÐ²Î¹¹Ôìº¯Êý
 	Person(int a) { m_Age = a; }
-	// æ‹·è´æž„é€ å‡½æ•°
-	Person(const Person &p) { // å¿…é¡»ä½¿ç”¨constä¿®é¥°çš„å¼•ç”¨ä¼ é€’
+	// ¿½±´¹¹Ôìº¯Êý
+	Person(const Person &p) { // ±ØÐëÊ¹ÓÃconstÐÞÊÎµÄÒýÓÃ´«µÝ
 		m_Age = p.m_Age;
 	}
 	void   SetName(int name) { m_Name = name; }
@@ -55,9 +55,9 @@ public:
 		  m_Age = age;
 	}
 
-	// æžæž„å‡½æ•° å¯¹è±¡é”€æ¯å‰è‡ªåŠ¨è°ƒç”¨å¹¶ä¸”åªä¼šè°ƒç”¨ä¸€æ¬¡
-	~Person() { cout << "Person æžæž„å‡½æ•°çš„è°ƒç”¨" << endl; }
-	// æž„é€ å’Œæžæž„ä¸å†™çš„è¯ç”±ç¼–è¯‘å™¨è‡ªåŠ¨ç”Ÿæˆ
+	// Îö¹¹º¯Êý ¶ÔÏóÏú»ÙÇ°×Ô¶¯µ÷ÓÃ²¢ÇÒÖ»»áµ÷ÓÃÒ»´Î
+	~Person() { cout << "Person Îö¹¹º¯ÊýµÄµ÷ÓÃ" << endl; }
+	// ¹¹ÔìºÍÎö¹¹²»Ð´µÄ»°ÓÉ±àÒëÆ÷×Ô¶¯Éú³É
 
 private:
 	string m_Name;
@@ -66,7 +66,7 @@ private:
 };
 
 int main() {
-	// é€šè¿‡åœ†ç±» åˆ›å»ºä¸€ä¸ªå…·ä½“çš„åœ†ï¼ˆå¯¹è±¡ï¼‰
+	// Í¨¹ýÔ²Àà ´´½¨Ò»¸ö¾ßÌåµÄÔ²£¨¶ÔÏó£©
 	Circle c1;
 	c1.r = 10;
 	cout << c1.calculateZC() << endl;
