@@ -7,7 +7,7 @@ class Person {
 public:
     Person(){}
 	Person(int a, int b) : m_A(a), m_B(b) {}
-    Person operator+(Person& p){
+    Person operator+(const Person& p){
         Person tmp;
         tmp.m_A = p.m_A + this->m_A;
         tmp.m_B = p.m_B + this->m_B;
