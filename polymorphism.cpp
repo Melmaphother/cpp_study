@@ -52,12 +52,10 @@ void test01() {
 	// 此时调用的是父类的speak函数
 	doSpeak(cat);
 }
-void test02() {
-    cout << "sizeof(Animal) = " << sizeof(Animal) << endl;
- }
+void test02() { cout << "sizeof(Animal) = " << sizeof(Animal) << endl; }
 
 int main() {
-	//test01();
-    test02();
+	// test01();
+	test02();
 	system("pause");
 }
