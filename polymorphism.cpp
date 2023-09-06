@@ -38,6 +38,10 @@ public:
 	void speak() { cout << "小猫在说话" << endl; }
 };
 
+class Dog : public Animal {
+public:
+	void speak() { cout << "小狗在说话" << endl; }
+};
 // * 地址早绑定，在编译阶段就确定了函数地址
 // * 如果想让猫说话，需要将地址晚绑定，即在运行阶段绑定
 // !需要将父类中的函数加上virtual关键字
@@ -51,11 +55,29 @@ void test01() {
 	Cat cat;
 	// 此时调用的是父类的speak函数
 	doSpeak(cat);
+	Dog dog;
+	doSpeak(dog);
 }
-void test02() { cout << "sizeof(Animal) = " << sizeof(Animal) << endl; }
+void test02() {
+	cout << "sizeof(Animal) = " << sizeof(Animal) << endl;
+	/*
+	int *p = NULL;
+	int	 a = 0;
+	cout << "sizeof(int) = " << sizeof(a) << endl;
+	cout << "sizeof(int pointer) = " << sizeof(p) << endl;
+	float b = 0;
+	float* q = NULL;
+	cout << "sizeof(float) = " << sizeof(b) << endl;
+	cout << "sizeof(float pointer) = " << sizeof(q) << endl;
+	double c = 0;
+	double* r = NULL;
+	cout << "sizeof(double) = " << sizeof(c) << endl;
+	cout << "sizeof(double pointer) = " << sizeof(r) << endl;
+	*/
+}
 
 int main() {
-	// test01();
+	test01();
 	test02();
 	system("pause");
 }
