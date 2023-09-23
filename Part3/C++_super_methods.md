@@ -41,6 +41,8 @@ _NODISCARD constexpr remove_reference_t<_Ty>&& move(_Ty&& _Arg) noexcept { // fo
 
 ## auto
 
+`auto`可以在声明变量时根据变量初始值的类型自动为此变量选择匹配的类型。
+
 ## STL中的 unique_ptr 和 make_unique
 inline
 
