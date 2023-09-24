@@ -43,16 +43,240 @@ _NODISCARD constexpr remove_reference_t<_Ty>&& move(_Ty&& _Arg) noexcept { // fo
 
 `auto`可以在声明变量时根据变量初始值的类型自动为此变量选择匹配的类型。
 
-## STL中的 unique_ptr 和 make_unique
-inline
+`auto`关键字更适用于类型冗长复杂、变量使用范围专一时，使程序更清晰易读，在简单的变量类型中，应尽量避免使用`auto`。
+
+`auto`只是一个占位符，不能用于类型转换或其他一些操作，如`sizeof`和`typeid`。
+
+## unique_ptr 和 make_unique
+
+
+
+## inline
+
+在 `c/c++` 中，为了解决一些频繁调用的小函数大量消耗栈空间（栈内存）的问题，特别的引入了 `inline` 修饰符，表示为内联函数。
+
+栈空间就是指放置程序的局部数据（也就是函数内数据）的内存空间。
+
+例如：
+
+```c
+inline const char *num_check(int v)
+{
+    return (v % 2 > 0) ? "奇" : "偶";
+}
+ 
+int main(void)
+{
+    int i;
+    for (i = 0; i < 100; i++)
+        printf("%02d   %s\n", i, num_check(i));
+    return 0;
+}
+```
+
+`inline`的使用是有限制的：
+
+- `inline` 只适合函数体内代码简单的函数使用，不能包含复杂的结构控制语句例如` while、switch`
+
+- 内联函数本身不能是直接递归函数。
+
+- `inline` 函数仅仅是一个对编译器的建议，所以最后能否真正内联，看编译器的意思。
+
+- 关键字 `inline` 必须与函数定义体放在一起才能使函数成为内联，仅将 `inline` 放在函数声明前面不起任何作用。
+
+  没用：
+
+  ```cpp
+  inline void Foo(int x, int y); // inline 仅与函数声明放在一起
+  void Foo(int x, int y){}
+  ```
+
+  有用：
+
+  ```cpp
+  void Foo(int x, int y); // inline 仅与函数声明放在一起
+  inline void Foo(int x, int y){}
+  ```
+
 
 ## explicit
 
+注意：
+
+- **C++中的explicit关键字只能用于修饰只有一个参数的类构造函数, 它的作用是表明该构造函数是显示的, 而非隐式的**
+
+- **跟它相对应的另一个关键字是implicit, 意思是隐藏的,类构造函数默认情况下即声明为implicit(隐式).**
+
+例如：
+
+```cpp
+class CxString  // 没有使用explicit关键字的类声明, 即默认为隐式声明  
+{  
+public:  
+    char *_pstr;  
+    int _size;  
+    CxString(int size)  
+    {  
+        _size = size;                // string的预设大小  
+        _pstr = malloc(size + 1);    // 分配string的内存  
+        memset(_pstr, 0, size + 1);  
+    }  
+    CxString(const char *p)  
+    {  
+        int size = strlen(p);  
+        _pstr = malloc(size + 1);    // 分配string的内存  
+        strcpy(_pstr, p);            // 复制字符串  
+        _size = strlen(_pstr);  
+    }  
+};  
+```
+
+调用时：
+
+```cpp
+ 	CxString string1(24);     // 这样是OK的, 为CxString预分配24字节的大小的内存  
+    CxString string2 = 10;    // 这样是OK的, 为CxString预分配10字节的大小的内存  
+    CxString string3;         // 这样是不行的, 因为没有默认构造函数, 错误为: “CxString”: 没有合适的默认构造函数可用  
+    CxString string4("aaaa"); // 这样是OK的  
+    CxString string5 = "bbb"; // 这样也是OK的, 调用的是CxString(const char *p)  
+    CxString string6 = 'c';   // 这样也是OK的, 其实调用的是CxString(int size), 且size等于'c'的ascii码  
+    string1 = 2;              // 这样也是OK的, 为CxString预分配2字节的大小的内存  
+    string2 = 3;              // 这样也是OK的, 为CxString预分配3字节的大小的内存  
+    string3 = string1;        // 这样也是OK的, 至少编译是没问题的, 但是如果析构函数里用free释放_pstr内存指针的时候可能会报错, 完整的代码必须重载运算符"=", 并在其中处理内存释放(深拷贝问题)
+```
+
+上面的代码中，`CxString string2 = 10;` 这句为什么是可以的呢？在C++中, 如果的构造函数只有一个参数时, 那么在编译的时候就会有一个缺省的转换操作:将该构造函数对应数据类型的数据转换为该类对象. 也就是说 `CxString string2 =10;` 这段代码, 编译器自动将整型转换为`CxString`类对象, 实际上等同于下面的操作：
+
+```cpp
+CxString string2(10);  
+CxString temp(10);  
+CxString string2 = temp;  
+```
+
+但是, 上面的代码中的`_size`代表的是字符串内存分配的大小, 那么调用的第二句 `CxString string2 = 10;` 和第六句 `CxString string6 = ‘c’;` 就显得不伦不类, 而且容易让人疑惑。这时就可以用`explicit`关键字禁止隐式转换。
+
+
+
+将代码修改为：
+
+```cpp
+class CxString  // 使用关键字explicit的类声明, 显示转换  
+{  
+public:  
+    char *_pstr;  
+    int _size;  
+    explicit CxString(int size)  
+    {  
+        _size = size;  
+        // 代码同上, 省略...  
+    }  
+    CxString(const char *p)  
+    {  
+        // 代码同上, 省略...  
+    }  
+};  
+```
+
+调用：
+
+```cpp
+    CxString string1(24);     // 这样是OK的  
+    CxString string2 = 10;    // 这样是不行的, 因为explicit关键字取消了隐式转换  
+    CxString string3;         // 这样是不行的, 因为没有默认构造函数  
+    CxString string4("aaaa"); // 这样是OK的  
+    CxString string5 = "bbb"; // 这样也是OK的, 调用的是CxString(const char *p)  
+    CxString string6 = 'c';   // 这样是不行的, 其实调用的是CxString(int size), 且size等于'c'的ascii码, 但explicit关键字取消了隐式转换  
+    string1 = 2;              // 这样也是不行的, 因为取消了隐式转换  
+    string2 = 3;              // 这样也是不行的, 因为取消了隐式转换  
+    string3 = string1;        // 这样也是不行的, 因为取消了隐式转换, 除非类实现操作符"="的重载  
+```
+
+- **explicit关键字的作用就是防止类构造函数的隐式自动转换.**
+
+- **explicit关键字只对有一个参数的类构造函数有效, 如果类构造函数参数大于或等于两个时, 是不会产生隐式转换的,所以explicit关键字也就无效了**.
+- **有一个例外, 就是当除了第一个参数以外的其他参数都有默认值的时候, explicit关键字依然有效**, **此时,** **当调用构造函数时只传入一个参数, 等效于只有一个参数的类构造函数**
+
 ## override
+
+作用：在成员函数声明或定义中， override 确保该函数为**虚函数**并**覆写来自基类的虚函数**。
+
+位置：函数调用运算符之后，函数体或纯虚函数**标识 “= 0” 之前**。
+
+好处:
+
+- 可以当注释用,方便阅读
+
+- 告诉阅读你代码的人，这是方法的复写
+
+- 编译器可以给你验证 override 对应的方法名是否是你父类中所有的，如果没有则报错．
+
+举例：
+
+```cpp
+class base
+{
+public:
+    virtual void fun1(void)=0;
+};
+
+class derived : public base
+{
+public:
+#if 1 //OK
+    void fun1(void) override {
+        cout << "a fun1" << std::endl;
+    }
+#else // err
+    void fun2(void) override {
+        cout << "a fun1" << std::endl;
+    }
+#endif
+
+private:
+    /* data */
+};
+```
+
+**在重写方法时，最好加上这个 override 这个关键字 以 加强代码规范。**
 
 ## nullptr和NULL的区别和联系
 
+在C语言和C++中 NULL 是一种宏定义，但两者有所不同：
+
+在C语言中：
+
+```c
+ #define NULL ((void*)0)
+```
+
+在C++中“
+
+```cpp
+#define NULL 0
+```
+
+NULL常常有二义性，比如：
+
+```cpp
+void test(void *p)
+{
+    cout<<"p is pointer "<<p<<endl;
+ }
+void test(int num)
+{
+    cout<<"num is int "<<num<<endl; 
+}
+int main(void)
+{
+    test(NULL);
+    return 0; 
+}
+```
+
+那么NULL会被解释成常量或者指针，导致编译器报错。在C++11中引入了`nullptr`表示空指针。
+
 ## C++的四种强制类型转换
+
 #### C风格的强制类型转换
 
 在C++基本的数据类型中，可以分为四类：整型，浮点型，字符型，布尔型。其中数值型包括 整型与浮点型；字符型即为char。
