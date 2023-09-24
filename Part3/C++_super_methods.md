@@ -49,6 +49,40 @@ _NODISCARD constexpr remove_reference_t<_Ty>&& move(_Ty&& _Arg) noexcept { // fo
 
 ## unique_ptr 和 make_unique
 
+**`unique_ptr`** 是 **C++ 11** 提供的用于防止内存泄漏的智能指针中的一种实现，在 `<memory>` 头文件中，独享被管理对象指针所有权的智能指针。`unique_ptr`对象包装一个原始指针，并负责其生命周期。当该对象被销毁时，会在其析构函数中删除关联的原始指针。
+
+注意：
+
+- `unique_ptr`没有copy构造函数，不支持普通的拷贝和赋值操作。仅支持移动构造和移动赋值操作
+
+- `unique_ptr`不支持拷贝操作，但却有一个例外：可以从函数中返回一个`unique_ptr`。
+
+`unique_ptr`的使用场景：
+
+```cpp
+void Func()
+{
+    int *p = new int(5);
+
+    // ...（可能会抛出异常）
+
+    delete p;
+}
+```
+
+这是我们传统的写法：当我们动态申请内存后，有可能我们接下来的代码由于抛出异常或者提前退出（if语句）而没有执行`delete`操作。
+
+解决的方法是使用`unique_ptr`来管理动态内存，只要`unique_ptr`指针创建成功，其析构函数都会被调用。确保动态资源被释放。
+
+```cpp
+void Func()
+{
+    unique_ptr<int> p(new int(5));
+
+    // ...（可能会抛出异常）
+}
+```
+
 
 
 ## inline
